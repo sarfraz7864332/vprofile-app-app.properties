@@ -1,0 +1,48 @@
+Vagrant.configure("2") do |config|
+  config.hostmanager.enabled = true 
+  config.hostmanager.manage_host = true
+  
+### DB vm  ####
+  config.vm.define "backend01" do |backend01|
+    backend01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    backend01.vm.box_version = "9.0.48"
+    backend01.vm.hostname = "backend01"
+    backend01.vm.network "private_network", ip: "192.168.56.15"
+    backend01.vm.provider "virtualbox" do |vb|
+     vb.memory = "2048"
+	 vb.cpus = 2
+   end
+    backend01.vm.provision "shell", path: "mysql.sh"  
+	backend01.vm.provision "shell", path: "memcache.sh"
+	backend01.vm.provision "shell", path: "rabbitmq.sh" 
+
+  end
+  
+  
+### tomcat vm ###
+   config.vm.define "app01" do |app01|
+    app01.vm.box = "eurolinux-vagrant/centos-stream-9"
+    app01.vm.box_version = "9.0.48"
+    app01.vm.hostname = "app01"
+    app01.vm.network "private_network", ip: "192.168.56.12"
+    app01.vm.provision "shell", path: "tomcat.sh"  
+    app01.vm.provider "virtualbox" do |vb|
+     vb.memory = "800"
+   end
+   end
+   
+  
+### Nginx VM ###
+  config.vm.define "web01" do |web01|
+    web01.vm.box = "ubuntu/jammy64"
+    web01.vm.hostname = "web01"
+  web01.vm.network "private_network", ip: "192.168.56.11"
+#  web01.vm.network "public_network"
+  web01.vm.provider "virtualbox" do |vb|
+     vb.gui = true
+     vb.memory = "800"
+   end
+  web01.vm.provision "shell", path: "nginx.sh"  
+end
+  
+end
