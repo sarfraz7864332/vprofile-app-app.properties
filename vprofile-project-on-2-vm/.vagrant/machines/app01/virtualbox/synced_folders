@@ -1,1 +1,0 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"E:/devop-practice/vprofile-project-on-2-vm","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}
