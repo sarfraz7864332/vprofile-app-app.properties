@@ -8,5 +8,5 @@ systemctl start tomcat
 sleep 20
 systemctl stop firewalld
 systemctl disable firewalld
-#cp /vagrant/application.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/application.properties
+cp /vagrant/application.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/application.properties
 systemctl restart tomcat
